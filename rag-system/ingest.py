@@ -6,7 +6,7 @@ from langchain_community.document_loaders import DirectoryLoader, TextLoader
 
 # 配置向量存储目录
 VECTOR_DB_PATH = "./vector_store"
-DATA_PATH = "./data"
+DATA_PATH = "/Users/wuzexin/Documents"
 
 def ingest_local_data(vector_db_path=VECTOR_DB_PATH, data_path=DATA_PATH):
     if not os.path.exists(data_path):
@@ -16,7 +16,7 @@ def ingest_local_data(vector_db_path=VECTOR_DB_PATH, data_path=DATA_PATH):
     # 1️⃣ 初始化 Embeddings
     embeddings = HuggingFaceEmbeddings(
         model_name="BAAI/bge-small-zh-v1.5",
-        model_kwargs={'device': 'cpu'}  # 可改为 'cuda' 或 'mps'
+        model_kwargs={'device': 'mps'}  # 可改为 'cuda' 或 'mps'
     )
 
     # 2️⃣ 初始化向量数据库
@@ -26,7 +26,7 @@ def ingest_local_data(vector_db_path=VECTOR_DB_PATH, data_path=DATA_PATH):
     )
 
     # 3️⃣ 加载文档
-    loader = DirectoryLoader(data_path, glob="**/*.txt", loader_cls=TextLoader)
+    loader = DirectoryLoader(data_path, glob="**/*.md", loader_cls=TextLoader)
     docs = loader.load()
 
     # 4️⃣ 文档切分
